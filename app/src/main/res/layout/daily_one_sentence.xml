@@ -32,7 +32,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:text="@string/daily_sen_text_1"
+                android:text="@string/daily_sentence"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/body1_primary"/>
 
@@ -43,7 +43,7 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:text="@string/daily_sen_text_2"
+                android:text="@string/daily_sentence_Ch"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/body1_primary"/>
 

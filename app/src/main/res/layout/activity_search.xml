@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/searchView"
-                app:queryHint="搜索您需要找的单词" />
+                app:queryHint="@string/query_hint" />
 
         </android.support.v7.widget.Toolbar>
 
