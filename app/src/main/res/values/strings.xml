@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">米米词典</string>
+    <string name="app_name">米米查单词</string>
     <string name="action_search">搜索单词</string>
     <string name="action_settings">设置</string>
     <string name="main_page">首页</string>
@@ -14,6 +14,7 @@
     <string name="no_network_err">当前无网络连接</string>
     <string name="no_result">未找到该单词</string>
     <string name="no_note">没有笔记</string>
+    <string name="no_share_app">没有找到分享应用</string>
 
     <!-- 主页 -->
     <string name="title_daily_one">每日一句</string>

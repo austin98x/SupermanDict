@@ -1,9 +1,11 @@
 package com.austin.supermandict.ui;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -51,11 +53,10 @@ public class IndexFragment extends Fragment {
     private TextView textViewChi;
     private TextView textViewCount;
     private ImageView imageViewMain;
-    private ImageView ivStar;
+    private ImageView ivShare;
     private ImageView ivCopy;
     private CardView cvStoreHint;
 
-    private Boolean isMarked = false;
     private String imageUrl = null;
 
     private Boolean isRendered = false;
@@ -135,8 +136,6 @@ public class IndexFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Nullable
@@ -146,44 +145,25 @@ public class IndexFragment extends Fragment {
 
         initViews(view);
 
-        if (DBUtil.queryIfItemExist(dbHelper,textViewEng.getText().toString())){
-            ivStar.setImageResource(R.drawable.ic_star_white_24dp);
-            isMarked = true;
-        } else {
-            ivStar.setImageResource(R.drawable.ic_star_border_white_24dp);
-            isMarked = false;
-        }
         getDataFromDB();
 
         textViewCount.setText(list.size()+"");
 
-        ivStar.setOnClickListener(new View.OnClickListener() {
+        ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // 在没有被收藏的情况下
-                if (!isMarked){
-                    ivStar.setImageResource(R.drawable.ic_star_white_24dp);
-                    Snackbar.make(ivStar, R.string.add_to_note, Snackbar.LENGTH_SHORT).show();
-                    isMarked = true;
-
-                    ContentValues values = new ContentValues();
-                    values.put("input",textViewEng.getText().toString());
-                    values.put("output",textViewChi.getText().toString());
-                    DBUtil.insertValue(dbHelper,values);
-                    getDataFromDB();
-                    textViewCount.setText(list.size()+"");
-                    values.clear();
-
-                } else {
-                    ivStar.setImageResource(R.drawable.ic_star_border_white_24dp);
-                    Snackbar.make(ivStar, R.string.remove_from_notebook, Snackbar.LENGTH_SHORT).show();
-                    isMarked = false;
-                    DBUtil.deleteValue(dbHelper,textViewEng.getText().toString());
-                    getDataFromDB();
-                    textViewCount.setText(list.size()+"");
-
+                try {
+                    String shareTittle = getString(R.string.title_daily_one);
+                    String shareContent = textViewEng.getText().toString() + "\n" + textViewChi.getText().toString();
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, shareTittle + "\n" + shareContent);
+                    sendIntent.setType("text/plain");
+                    startActivityForResult(sendIntent, 0);
+                } catch (ActivityNotFoundException anf) {
+                    Snackbar.make(ivShare, R.string.no_share_app, Snackbar.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -205,21 +185,18 @@ public class IndexFragment extends Fragment {
             isRendered = true;
         }
 
-
         return view;
     }
 
     private void initViews(View view) {
-
         textViewEng = view.findViewById(R.id.text_view_eng);
         textViewChi =  view.findViewById(R.id.text_view_chi);
         textViewCount = view.findViewById(R.id.tv_ItemCount);
         imageViewMain = view.findViewById(R.id.image_view_daily);
         cvStoreHint = view.findViewById(R.id.cardView_StoreHint);
 
-        ivStar = view.findViewById(R.id.image_view_mark_star);
+        ivShare = view.findViewById(R.id.image_view_share);
         ivCopy = view.findViewById(R.id.image_view_copy);
-
     }
 
 
