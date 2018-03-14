@@ -25,3 +25,7 @@
 -keep class * {
     public private *;
 }
+
+# MiAd SDK
+-keep class com.xiaomi.ad.**{*;}
+-keep class com.miui.zeus.**{*;}

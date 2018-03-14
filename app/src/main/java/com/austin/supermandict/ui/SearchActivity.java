@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.austin.supermandict.R;
+import com.xiaomi.mistatistic.sdk.MiStatInterface;
 
 /**
  * Created by HoHoibin on 03/01/2018.
@@ -65,6 +66,18 @@ public class SearchActivity extends AppCompatActivity {
             return false;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MiStatInterface.recordPageStart(this, "Search Page");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MiStatInterface.recordPageEnd();
     }
 
 }

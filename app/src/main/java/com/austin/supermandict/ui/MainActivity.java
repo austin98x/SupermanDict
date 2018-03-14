@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.facebook.stetho.Stetho;
 import com.austin.supermandict.R;
+import com.xiaomi.mistatistic.sdk.MiStatInterface;
 
 /**
  * Created by HoHoibin on 03/01/2018.
@@ -172,4 +173,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MiStatInterface.recordPageStart(this, "Main Page");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MiStatInterface.recordPageEnd();
+    }
+
 }
