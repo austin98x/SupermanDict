@@ -48,6 +48,8 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
+        <activity android:name=".ui.AboutPayActivity"/>
+
         <meta-data
             android:name="android.app.default_searchable"
             android:value=".ui.SearchableActivity"/>

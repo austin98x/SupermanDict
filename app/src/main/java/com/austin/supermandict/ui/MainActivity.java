@@ -28,10 +28,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private NavigationView navView;
+    private Menu mMenu;
 
     private IndexFragment indexFragment;
     private WordFragment wordFragment;
     private NoteBookFragment noteBookFragment;
+    private AboutFragment aboutFragment;
 
     private String queryWord;
 
@@ -49,23 +51,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             indexFragment = (IndexFragment) manager.getFragment(savedInstanceState,"indexFragment");
             wordFragment = (WordFragment) manager.getFragment(savedInstanceState, "wordFragment");
             noteBookFragment = (NoteBookFragment) manager.getFragment(savedInstanceState,"noteBookFragment");
+            aboutFragment = (AboutFragment) manager.getFragment(savedInstanceState,"aboutFragment");
         } else {
             indexFragment = new IndexFragment();
             wordFragment = new WordFragment();
             noteBookFragment = new NoteBookFragment();
+            aboutFragment = new AboutFragment();
         }
 
         FragmentManager manager = getSupportFragmentManager();
 
-        manager.beginTransaction()
-                .add(R.id.container_main, indexFragment, "indexFragment")
-                .commit();
-        manager.beginTransaction()
-                .add(R.id.container_main,wordFragment,"wordFragment")
-                .commit();
-        manager.beginTransaction()
-                .add(R.id.container_main,noteBookFragment,"noteBookFragment")
-                .commit();
+        if (manager.getFragments().isEmpty()) {
+            manager.beginTransaction()
+                    .add(R.id.container_main, indexFragment, "indexFragment")
+                    .commit();
+            manager.beginTransaction()
+                    .add(R.id.container_main,wordFragment,"wordFragment")
+                    .commit();
+            manager.beginTransaction()
+                    .add(R.id.container_main,noteBookFragment,"noteBookFragment")
+                    .commit();
+            manager.beginTransaction()
+                    .add(R.id.container_main,aboutFragment,"aboutFragment")
+                    .commit();
+        }
 
         Intent intent = getIntent();
         //从Intent当中根据key取得value
@@ -80,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 showHideFragment(0);
             }
         }
-
 
     }
 
@@ -101,7 +109,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
+        mMenu = menu;
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        updateMenu(true);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -118,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         manager.beginTransaction().hide(indexFragment).commit();
         manager.beginTransaction().hide(wordFragment).commit();
         manager.beginTransaction().hide(noteBookFragment).commit();
-
+        manager.beginTransaction().hide(aboutFragment).commit();
 
         if (position == 0) {
             manager.beginTransaction().show(indexFragment).commit();
@@ -132,6 +147,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             toolbar.setTitle(R.string.title_note_book);
             manager.beginTransaction().show(noteBookFragment).commit();
             navView.setCheckedItem(R.id.nav_notebook);
+        } else if (position == 3) {
+            toolbar.setTitle(R.string.title_about);
+            manager.beginTransaction().show(aboutFragment).commit();
+            navView.setCheckedItem(R.id.nav_about);
         }
 
     }
@@ -139,23 +158,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         int id = item.getItemId();
-
         if (id == R.id.nav_translate) {
-
             showHideFragment(0);
-
+            updateMenu(true);
         } else if (id == R.id.nav_notebook) {
-
             showHideFragment(2);
-
+            updateMenu(false);
+        } else if (id == R.id.nav_about) {
+            showHideFragment(3);
+            updateMenu(false);
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -172,6 +190,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().putFragment(outState, "noteBookFragment", noteBookFragment);
         }
 
+        if (aboutFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "aboutFragment", aboutFragment);
+        }
+
     }
 
     @Override
@@ -184,6 +206,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onPause() {
         super.onPause();
         MiStatInterface.recordPageEnd();
+    }
+
+    private void updateMenu(boolean showSearch) {
+        if (showSearch) {
+            mMenu.findItem(R.id.action_search).setVisible(true);
+            mMenu.findItem(R.id.action_search).setEnabled(true);
+        } else {
+            mMenu.findItem(R.id.action_search).setVisible(false);
+            mMenu.findItem(R.id.action_search).setEnabled(false);
+        }
     }
 
 }

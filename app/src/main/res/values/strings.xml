@@ -4,6 +4,7 @@
     <string name="action_settings">设置</string>
     <string name="main_page">首页</string>
     <string name="note_page">单词本</string>
+    <string name="about">关于</string>
     <string name="search_hint">搜索建议</string>
     <string name="query_hint">搜索您需要找的单词</string>
     <string name="notice">你所查询的单词为：</string>
@@ -14,12 +15,13 @@
     <string name="no_network_err">当前无网络连接</string>
     <string name="no_result">未找到该单词</string>
     <string name="no_note">没有笔记</string>
-    <string name="no_share_app">没有找到分享应用</string>
+    <string name="no_share_app">没有找到应用</string>
 
     <!-- 主页 -->
     <string name="title_daily_one">每日一句</string>
     <string name="title_word_search">单词搜索</string>
     <string name="title_note_book">我的单词本</string>
+    <string name="title_about">关于</string>
 
     <string name="word_proEn">Pronunciation</string>
     <string name="word_proCh">发音</string>
@@ -41,4 +43,20 @@
     <string name="add_to_note">已添加至我的单词本</string>
 
     <string name="your_Notebook">你的单词本里共有</string>
+
+    <string name="about_mark">给个好评</string>
+    <string name="about_suggestion">问题反馈</string>
+    <string name="about_support">支持开发者</string>
+    <string name="about_share">分享应用</string>
+    <string name="mail_send_to">wcfds@sina.com</string>
+    <string name="mail_topic">米米查单词使用反馈与建议</string>
+    <string name="device_model">设备型号：</string>
+    <string name="sdk_version">SDK版本：</string>
+    <string name="no_mail_app">没有安装邮件类应用</string>
+    <string name="share_title">分享一款不错的查单词软件[米米查单词]</string>
+    <string name="share_content">下载地址：</string>
+    <string name="share_url">https://fir.im/gpbf</string>
+    <string name="about_pay">为保证『米米查单词』的持续运营，您可以通过微信付款来支持开发者继续优化应用，金额大小根据您的心情。\n\n
+        可以用微信直接扫描二维码，然后识别二维码支付。\n\n
+        感谢您的支持！</string>
 </resources>

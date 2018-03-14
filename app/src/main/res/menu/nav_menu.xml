@@ -4,12 +4,14 @@
         <item
             android:id="@+id/nav_translate"
             android:icon="@drawable/ic_translate_white_24dp"
-            android:title="@string/main_page"
-            />
+            android:title="@string/main_page" />
         <item
             android:id="@+id/nav_notebook"
             android:icon="@drawable/ic_book_white_24dp"
-            android:title="@string/note_page"
-            />
+            android:title="@string/note_page" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info_white_24dp"
+            android:title="@string/about" />
     </group>
 </menu>

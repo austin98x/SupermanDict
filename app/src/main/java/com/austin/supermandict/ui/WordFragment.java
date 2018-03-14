@@ -173,7 +173,7 @@ public class WordFragment extends Fragment {
         //用泛型封装model 并解析
         smodel = gson.fromJson(string, new TypeToken<ShanBayModel<ShanBayModel.ShanBay>>(){}.getType());
         model = (ShanBayModel.ShanBay) smodel.getData();
-        if(smodel.getStatus_code()==0)
+        if(smodel.getStatus_code() == 0)
         {
             if (smodel != null) {
                 if (model.getPronunciations() != null) {
@@ -230,46 +230,49 @@ public class WordFragment extends Fragment {
 
                     result = "\nAmE:" + p.getUs() + "\nBrE:" + p.getUk() + "\n";
 
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                if (DBUtil.queryIfItemExist(dbHelper, queryWord)) {
-                                    floatingActionButton.setImageResource(R.drawable.ic_star_white_24dp);
-                                    isMarked = true;
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (DBUtil.queryIfItemExist(dbHelper, queryWord)) {
+                                        floatingActionButton.setImageResource(R.drawable.ic_star_white_24dp);
+                                        isMarked = true;
+                                    }
+
+                                    AmEButton.setText("美音 " + p.getUs());
+                                    BrEButton.setText("英音 " + p.getUk());
+                                    tv_DefCh_Detail.setText(cn_def.getDefn());
+                                    tv_DefEn_Detail.setText(en_def.getDefn());
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-
-                                AmEButton.setText("美音 "+p.getUs());
-                                BrEButton.setText("英音 "+p.getUk());
-                                tv_DefCh_Detail.setText(cn_def.getDefn());
-                                tv_DefEn_Detail.setText(en_def.getDefn());
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
-                        }
-                    });
+                        });
+                    }
                 }
                 Log.e("result",result+"");
                 Log.e("result",smodel.getMsg()+"");
             }
-        }else{
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    detail_view.setVisibility(View.INVISIBLE);
-                    Snackbar snackbar = Snackbar.make(collapsingToolbarLayout, R.string.no_result, Snackbar.LENGTH_SHORT);
-                    snackbar.setAction(R.string.retype, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            getActivity().finish();
-                        }
-                    });
-                    snackbar.show();
-                    floatingActionButton.setVisibility(View.INVISIBLE);
-                }
-            });
-
+        } else {
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        detail_view.setVisibility(View.INVISIBLE);
+                        Snackbar snackbar = Snackbar.make(collapsingToolbarLayout, R.string.no_result, Snackbar.LENGTH_SHORT);
+                        snackbar.setAction(R.string.retype, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                getActivity().finish();
+                            }
+                        });
+                        snackbar.show();
+                        floatingActionButton.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
         }
 
     }
