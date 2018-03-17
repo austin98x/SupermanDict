@@ -52,12 +52,10 @@ public class WordFragment extends Fragment {
     private AppCompatButton SnackButton;
     private FloatingActionButton floatingActionButton;
 
-
     private ShanBayModel.ShanBay model;
     private ShanBayModel smodel;
     private NoteBookDatabaseHelper dbHelper;
     private boolean isMarked = false;
-
 
     private MediaPlayer mediaPlayer;
     private MediaPlayer mediaPlayer2;
@@ -66,8 +64,7 @@ public class WordFragment extends Fragment {
 
     }
 
-    public static WordFragment newInstance()
-    {
+    public static WordFragment newInstance() {
         return new WordFragment();
     }
 
@@ -85,8 +82,7 @@ public class WordFragment extends Fragment {
         initViews(view);
 
         Bundle bundle = this.getArguments();
-        if (bundle != null)
-        {
+        if (bundle != null) {
             queryWord = bundle.getString("queryWord");
             collapsingToolbarLayout.setTitle(queryWord);
             mediaPlayer = new MediaPlayer();
@@ -96,40 +92,34 @@ public class WordFragment extends Fragment {
             sendRequest();
         }
 
-
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // 在没有被收藏的情况下
                 if (!isMarked){
+                    if (queryWord.isEmpty())
+                        return;
+
                     floatingActionButton.setImageResource(R.drawable.ic_star_white_24dp);
                     Snackbar.make(collapsingToolbarLayout, R.string.add_to_note,Snackbar.LENGTH_SHORT)
                             .show();
                     isMarked = true;
-
                     ContentValues values = new ContentValues();
-                    values.put("input",queryWord);
-                    values.put("output",model.getCn_definition().getDefn());
+                    values.put("input", queryWord);
+                    values.put("output", "");
+                    if (model != null && model.getCn_definition() != null) {
+                        values.put("output", model.getCn_definition().getDefn());
+                    }
                     DBUtil.insertValue(dbHelper,values);
-
                     values.clear();
-
                 } else {
                     floatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
                     Snackbar.make(collapsingToolbarLayout,R.string.remove_from_notebook,Snackbar.LENGTH_SHORT)
                             .show();
                     isMarked = false;
-
                     DBUtil.deleteValue(dbHelper, queryWord);
                 }
-
             }
         });
-
-
-
 
         return view;
     }
@@ -144,8 +134,7 @@ public class WordFragment extends Fragment {
         detail_view = view.findViewById(R.id.layout_word_detail);
     }
 
-    public void sendRequest()
-    {
+    public void sendRequest() {
         OkHttpClient okHttpClient = new OkHttpClient();
         final Handler mainHandler = new Handler(Looper.getMainLooper());
         Request request = new Request.Builder()

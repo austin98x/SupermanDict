@@ -48,7 +48,7 @@
     <string name="about_suggestion">问题反馈</string>
     <string name="about_support">支持开发者</string>
     <string name="about_share">分享应用</string>
-    <string name="mail_send_to">wcfds@sina.com</string>
+    <string name="mail_send_to">mailto:wcfds@sina.com</string>
     <string name="mail_topic">米米查单词使用反馈与建议</string>
     <string name="device_model">设备型号：</string>
     <string name="sdk_version">SDK版本：</string>
